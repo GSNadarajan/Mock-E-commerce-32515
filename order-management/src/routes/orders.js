@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const OrderController = require('../controllers/orderController');
 const { authenticateToken } = require('../middleware/auth');
 const { orderCreateValidation, orderUpdateValidation } = require('../middleware/validation');
 
@@ -67,10 +68,7 @@ const { orderCreateValidation, orderUpdateValidation } = require('../middleware/
  *               items:
  *                 $ref: '#/components/schemas/Order'
  */
-router.get('/', authenticateToken, (req, res) => {
-  // This route will be implemented in the controller
-  res.status(501).json({ message: 'Not implemented yet' });
-});
+router.get('/', authenticateToken, OrderController.getAllOrders);
 
 /**
  * @swagger
@@ -97,10 +95,7 @@ router.get('/', authenticateToken, (req, res) => {
  *       404:
  *         description: Order not found
  */
-router.get('/:id', authenticateToken, (req, res) => {
-  // This route will be implemented in the controller
-  res.status(501).json({ message: 'Not implemented yet' });
-});
+router.get('/:id', authenticateToken, OrderController.getOrderById);
 
 /**
  * @swagger
@@ -127,10 +122,7 @@ router.get('/:id', authenticateToken, (req, res) => {
  *               items:
  *                 $ref: '#/components/schemas/Order'
  */
-router.get('/user/:userId', authenticateToken, (req, res) => {
-  // This route will be implemented in the controller
-  res.status(501).json({ message: 'Not implemented yet' });
-});
+router.get('/user/:userId', authenticateToken, OrderController.getOrdersByUserId);
 
 /**
  * @swagger
@@ -178,10 +170,7 @@ router.get('/user/:userId', authenticateToken, (req, res) => {
  *       400:
  *         description: Invalid request data
  */
-router.post('/', authenticateToken, orderCreateValidation, (req, res) => {
-  // This route will be implemented in the controller
-  res.status(501).json({ message: 'Not implemented yet' });
-});
+router.post('/', authenticateToken, orderCreateValidation, OrderController.createOrder);
 
 /**
  * @swagger
@@ -218,10 +207,7 @@ router.post('/', authenticateToken, orderCreateValidation, (req, res) => {
  *       404:
  *         description: Order not found
  */
-router.put('/:id', authenticateToken, orderUpdateValidation, (req, res) => {
-  // This route will be implemented in the controller
-  res.status(501).json({ message: 'Not implemented yet' });
-});
+router.put('/:id', authenticateToken, orderUpdateValidation, OrderController.updateOrder);
 
 /**
  * @swagger
@@ -244,9 +230,149 @@ router.put('/:id', authenticateToken, orderUpdateValidation, (req, res) => {
  *       404:
  *         description: Order not found
  */
-router.delete('/:id', authenticateToken, (req, res) => {
-  // This route will be implemented in the controller
-  res.status(501).json({ message: 'Not implemented yet' });
-});
+router.delete('/:id', authenticateToken, OrderController.deleteOrder);
+
+/**
+ * @swagger
+ * /api/orders/{id}/status:
+ *   patch:
+ *     summary: Update order status
+ *     tags: [Orders]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The order ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - status
+ *             properties:
+ *               status:
+ *                 type: string
+ *                 enum: [pending, processing, shipped, delivered, cancelled]
+ *     responses:
+ *       200:
+ *         description: Order status updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Order'
+ *       400:
+ *         description: Invalid status
+ *       404:
+ *         description: Order not found
+ */
+router.patch('/:id/status', authenticateToken, OrderController.updateOrderStatus);
+
+/**
+ * @swagger
+ * /api/orders/search:
+ *   get:
+ *     summary: Search orders by criteria
+ *     tags: [Orders]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: userId
+ *         schema:
+ *           type: string
+ *         description: Filter by user ID
+ *       - in: query
+ *         name: status
+ *         schema:
+ *           type: string
+ *         description: Filter by order status
+ *       - in: query
+ *         name: startDate
+ *         schema:
+ *           type: string
+ *           format: date
+ *         description: Filter by orders created after this date
+ *       - in: query
+ *         name: endDate
+ *         schema:
+ *           type: string
+ *           format: date
+ *         description: Filter by orders created before this date
+ *     responses:
+ *       200:
+ *         description: List of matching orders
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Order'
+ */
+router.get('/search', authenticateToken, OrderController.searchOrders);
+
+/**
+ * @swagger
+ * /api/orders/status/{status}:
+ *   get:
+ *     summary: Get orders by status
+ *     tags: [Orders]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: status
+ *         schema:
+ *           type: string
+ *           enum: [pending, processing, shipped, delivered, cancelled]
+ *         required: true
+ *         description: The order status
+ *     responses:
+ *       200:
+ *         description: List of orders with the specified status
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Order'
+ *       400:
+ *         description: Invalid status
+ */
+router.get('/status/:status', authenticateToken, OrderController.getOrdersByStatus);
+
+/**
+ * @swagger
+ * /api/orders/counts:
+ *   get:
+ *     summary: Get order counts by status
+ *     tags: [Orders]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Order counts by status
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 pending:
+ *                   type: integer
+ *                 processing:
+ *                   type: integer
+ *                 shipped:
+ *                   type: integer
+ *                 delivered:
+ *                   type: integer
+ *                 cancelled:
+ *                   type: integer
+ */
+router.get('/counts', authenticateToken, OrderController.getOrderCounts);
 
 module.exports = router;

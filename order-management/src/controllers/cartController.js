@@ -85,6 +85,72 @@ class CartController {
       res.status(500).json({ error: 'Failed to clear cart' });
     }
   }
+
+  /**
+   * Update item quantity in cart
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   */
+  static async updateItemQuantity(req, res) {
+    try {
+      const { userId, productId } = req.params;
+      const { quantity } = req.body;
+      
+      if (!quantity || typeof quantity !== 'number' || quantity < 1) {
+        return res.status(400).json({ error: 'Valid quantity is required' });
+      }
+      
+      const updatedCart = await CartModel.updateItemQuantity(userId, productId, quantity);
+      
+      if (!updatedCart) {
+        return res.status(404).json({ error: 'Cart or item not found' });
+      }
+      
+      res.status(200).json(updatedCart);
+    } catch (error) {
+      console.error(`Error updating item quantity in cart for user ${req.params.userId}:`, error);
+      res.status(500).json({ error: 'Failed to update item quantity' });
+    }
+  }
+
+  /**
+   * Calculate cart total
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   */
+  static async calculateCartTotal(req, res) {
+    try {
+      const { userId } = req.params;
+      
+      const total = await CartModel.calculateCartTotal(userId);
+      res.status(200).json(total);
+    } catch (error) {
+      console.error(`Error calculating cart total for user ${req.params.userId}:`, error);
+      res.status(500).json({ error: 'Failed to calculate cart total' });
+    }
+  }
+
+  /**
+   * Delete cart
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   */
+  static async deleteCart(req, res) {
+    try {
+      const { userId } = req.params;
+      
+      const deleted = await CartModel.deleteCart(userId);
+      
+      if (!deleted) {
+        return res.status(404).json({ error: 'Cart not found' });
+      }
+      
+      res.status(200).json({ message: 'Cart deleted successfully' });
+    } catch (error) {
+      console.error(`Error deleting cart for user ${req.params.userId}:`, error);
+      res.status(500).json({ error: 'Failed to delete cart' });
+    }
+  }
 }
 
 module.exports = CartController;

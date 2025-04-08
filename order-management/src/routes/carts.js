@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const CartController = require('../controllers/cartController');
 const { authenticateToken } = require('../middleware/auth');
 const { cartItemValidation } = require('../middleware/validation');
 
@@ -77,10 +78,7 @@ const { cartItemValidation } = require('../middleware/validation');
  *       404:
  *         description: Cart not found
  */
-router.get('/:userId', authenticateToken, (req, res) => {
-  // This route will be implemented in the controller
-  res.status(501).json({ message: 'Not implemented yet' });
-});
+router.get('/:userId', authenticateToken, CartController.getCartByUserId);
 
 /**
  * @swagger
@@ -113,10 +111,7 @@ router.get('/:userId', authenticateToken, (req, res) => {
  *       400:
  *         description: Invalid request data
  */
-router.post('/:userId/items', authenticateToken, cartItemValidation, (req, res) => {
-  // This route will be implemented in the controller
-  res.status(501).json({ message: 'Not implemented yet' });
-});
+router.post('/:userId/items', authenticateToken, cartItemValidation, CartController.addItemToCart);
 
 /**
  * @swagger
@@ -149,10 +144,7 @@ router.post('/:userId/items', authenticateToken, cartItemValidation, (req, res) 
  *       404:
  *         description: Cart or item not found
  */
-router.delete('/:userId/items/:productId', authenticateToken, (req, res) => {
-  // This route will be implemented in the controller
-  res.status(501).json({ message: 'Not implemented yet' });
-});
+router.delete('/:userId/items/:productId', authenticateToken, CartController.removeItemFromCart);
 
 /**
  * @swagger
@@ -175,9 +167,106 @@ router.delete('/:userId/items/:productId', authenticateToken, (req, res) => {
  *       404:
  *         description: Cart not found
  */
-router.delete('/:userId', authenticateToken, (req, res) => {
-  // This route will be implemented in the controller
-  res.status(501).json({ message: 'Not implemented yet' });
-});
+router.delete('/:userId', authenticateToken, CartController.clearCart);
+
+/**
+ * @swagger
+ * /api/carts/{userId}/items/{productId}/quantity:
+ *   patch:
+ *     summary: Update item quantity in cart
+ *     tags: [Carts]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The user ID
+ *       - in: path
+ *         name: productId
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The product ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - quantity
+ *             properties:
+ *               quantity:
+ *                 type: integer
+ *                 minimum: 1
+ *     responses:
+ *       200:
+ *         description: Item quantity updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Cart'
+ *       400:
+ *         description: Invalid quantity
+ *       404:
+ *         description: Cart or item not found
+ */
+router.patch('/:userId/items/:productId/quantity', authenticateToken, CartController.updateItemQuantity);
+
+/**
+ * @swagger
+ * /api/carts/{userId}/total:
+ *   get:
+ *     summary: Calculate cart total
+ *     tags: [Carts]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The user ID
+ *     responses:
+ *       200:
+ *         description: Cart total and item count
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 total:
+ *                   type: number
+ *                 itemCount:
+ *                   type: integer
+ */
+router.get('/:userId/total', authenticateToken, CartController.calculateCartTotal);
+
+/**
+ * @swagger
+ * /api/carts/{userId}/delete:
+ *   delete:
+ *     summary: Delete a user's cart completely
+ *     tags: [Carts]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The user ID
+ *     responses:
+ *       200:
+ *         description: Cart deleted successfully
+ *       404:
+ *         description: Cart not found
+ */
+router.delete('/:userId/delete', authenticateToken, CartController.deleteCart);
 
 module.exports = router;
