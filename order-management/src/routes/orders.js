@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const OrderController = require('../controllers/orderController');
-const { authenticateToken, userExists, isAdmin, isResourceOwner } = require('../middleware/auth');
 const { orderCreateValidation, orderUpdateValidation } = require('../middleware/validation');
 
 /**
@@ -68,7 +67,7 @@ const { orderCreateValidation, orderUpdateValidation } = require('../middleware/
  *               items:
  *                 $ref: '#/components/schemas/Order'
  */
-router.get('/', authenticateToken, isAdmin, OrderController.getAllOrders);
+router.get('/', OrderController.getAllOrders);
 
 /**
  * @swagger
@@ -95,7 +94,7 @@ router.get('/', authenticateToken, isAdmin, OrderController.getAllOrders);
  *       404:
  *         description: Order not found
  */
-router.get('/:id', authenticateToken, OrderController.getOrderById);
+router.get('/:id', OrderController.getOrderById);
 
 /**
  * @swagger
@@ -122,7 +121,7 @@ router.get('/:id', authenticateToken, OrderController.getOrderById);
  *               items:
  *                 $ref: '#/components/schemas/Order'
  */
-router.get('/user/:userId', authenticateToken, isResourceOwner, OrderController.getOrdersByUserId);
+router.get('/user/:userId', OrderController.getOrdersByUserId);
 
 /**
  * @swagger
@@ -170,7 +169,7 @@ router.get('/user/:userId', authenticateToken, isResourceOwner, OrderController.
  *       400:
  *         description: Invalid request data
  */
-router.post('/', authenticateToken, orderCreateValidation, userExists, OrderController.createOrder);
+router.post('/', orderCreateValidation, OrderController.createOrder);
 
 /**
  * @swagger
@@ -207,7 +206,7 @@ router.post('/', authenticateToken, orderCreateValidation, userExists, OrderCont
  *       404:
  *         description: Order not found
  */
-router.put('/:id', authenticateToken, orderUpdateValidation, OrderController.updateOrder);
+router.put('/:id', orderUpdateValidation, OrderController.updateOrder);
 
 /**
  * @swagger
@@ -230,7 +229,7 @@ router.put('/:id', authenticateToken, orderUpdateValidation, OrderController.upd
  *       404:
  *         description: Order not found
  */
-router.delete('/:id', authenticateToken, OrderController.deleteOrder);
+router.delete('/:id', OrderController.deleteOrder);
 
 /**
  * @swagger
@@ -271,7 +270,7 @@ router.delete('/:id', authenticateToken, OrderController.deleteOrder);
  *       404:
  *         description: Order not found
  */
-router.patch('/:id/status', authenticateToken, isAdmin, OrderController.updateOrderStatus);
+router.patch('/:id/status', OrderController.updateOrderStatus);
 
 /**
  * @swagger
@@ -314,7 +313,7 @@ router.patch('/:id/status', authenticateToken, isAdmin, OrderController.updateOr
  *               items:
  *                 $ref: '#/components/schemas/Order'
  */
-router.get('/search', authenticateToken, isAdmin, OrderController.searchOrders);
+router.get('/search', OrderController.searchOrders);
 
 /**
  * @swagger
@@ -344,7 +343,7 @@ router.get('/search', authenticateToken, isAdmin, OrderController.searchOrders);
  *       400:
  *         description: Invalid status
  */
-router.get('/status/:status', authenticateToken, isAdmin, OrderController.getOrdersByStatus);
+router.get('/status/:status', OrderController.getOrdersByStatus);
 
 /**
  * @swagger
@@ -373,6 +372,6 @@ router.get('/status/:status', authenticateToken, isAdmin, OrderController.getOrd
  *                 cancelled:
  *                   type: integer
  */
-router.get('/counts', authenticateToken, isAdmin, OrderController.getOrderCounts);
+router.get('/counts', OrderController.getOrderCounts);
 
 module.exports = router;

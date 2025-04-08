@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const CartController = require('../controllers/cartController');
-const { authenticateToken, userExists, isResourceOwner } = require('../middleware/auth');
+const { userExists } = require('../middleware/auth');
 const { cartItemValidation } = require('../middleware/validation');
 
 /**
@@ -78,7 +78,7 @@ const { cartItemValidation } = require('../middleware/validation');
  *       404:
  *         description: Cart not found
  */
-router.get('/:userId', authenticateToken, isResourceOwner, CartController.getCartByUserId);
+router.get('/:userId', CartController.getCartByUserId);
 
 /**
  * @swagger
@@ -111,7 +111,7 @@ router.get('/:userId', authenticateToken, isResourceOwner, CartController.getCar
  *       400:
  *         description: Invalid request data
  */
-router.post('/:userId/items', authenticateToken, cartItemValidation, isResourceOwner, userExists, CartController.addItemToCart);
+router.post('/:userId/items', cartItemValidation, CartController.addItemToCart);
 
 /**
  * @swagger
@@ -144,7 +144,7 @@ router.post('/:userId/items', authenticateToken, cartItemValidation, isResourceO
  *       404:
  *         description: Cart or item not found
  */
-router.delete('/:userId/items/:productId', authenticateToken, isResourceOwner, CartController.removeItemFromCart);
+router.delete('/:userId/items/:productId', CartController.removeItemFromCart);
 
 /**
  * @swagger
@@ -167,7 +167,7 @@ router.delete('/:userId/items/:productId', authenticateToken, isResourceOwner, C
  *       404:
  *         description: Cart not found
  */
-router.delete('/:userId', authenticateToken, isResourceOwner, CartController.clearCart);
+router.delete('/:userId', CartController.clearCart);
 
 /**
  * @swagger
@@ -214,7 +214,7 @@ router.delete('/:userId', authenticateToken, isResourceOwner, CartController.cle
  *       404:
  *         description: Cart or item not found
  */
-router.patch('/:userId/items/:productId/quantity', authenticateToken, isResourceOwner, CartController.updateItemQuantity);
+router.patch('/:userId/items/:productId/quantity', CartController.updateItemQuantity);
 
 /**
  * @swagger
@@ -244,7 +244,7 @@ router.patch('/:userId/items/:productId/quantity', authenticateToken, isResource
  *                 itemCount:
  *                   type: integer
  */
-router.get('/:userId/total', authenticateToken, isResourceOwner, CartController.calculateCartTotal);
+router.get('/:userId/total', CartController.calculateCartTotal);
 
 /**
  * @swagger
@@ -267,6 +267,6 @@ router.get('/:userId/total', authenticateToken, isResourceOwner, CartController.
  *       404:
  *         description: Cart not found
  */
-router.delete('/:userId/delete', authenticateToken, isResourceOwner, CartController.deleteCart);
+router.delete('/:userId/delete', CartController.deleteCart);
 
 module.exports = router;
