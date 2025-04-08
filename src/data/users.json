@@ -1,4 +1,10 @@
 {
-  "users": [],
-  "schemaVersion": "1.0"
+  "schemaVersion": "1.0",
+  "users": [
+    {
+      "id": "test",
+      "username": "test",
+      "email": "test@test.com"
+    }
+  ]
 }
