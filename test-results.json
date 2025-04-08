@@ -1,0 +1,126 @@
+{
+  "total": 13,
+  "passed": 13,
+  "failed": 0,
+  "skipped": 0,
+  "tests": [
+    {
+      "test_id": "GET /api/users (Initial)",
+      "status": "passed",
+      "duration": "N/A",
+      "error_message": null,
+      "failure_logs": null,
+      "command_executed": "axios GET /api/users (Initial)",
+      "reason_for_failure": null
+    },
+    {
+      "test_id": "POST /api/users (User 1)",
+      "status": "passed",
+      "duration": "N/A",
+      "error_message": null,
+      "failure_logs": null,
+      "command_executed": "axios POST /api/users (User 1)",
+      "reason_for_failure": null
+    },
+    {
+      "test_id": "POST /api/users (User 2)",
+      "status": "passed",
+      "duration": "N/A",
+      "error_message": null,
+      "failure_logs": null,
+      "command_executed": "axios POST /api/users (User 2)",
+      "reason_for_failure": null
+    },
+    {
+      "test_id": "GET /api/users (After Creation)",
+      "status": "passed",
+      "duration": "N/A",
+      "error_message": null,
+      "failure_logs": null,
+      "command_executed": "axios GET /api/users (After Creation)",
+      "reason_for_failure": null
+    },
+    {
+      "test_id": "GET /api/users/a594a005-1c83-4c80-b8c1-606528a3fc87",
+      "status": "passed",
+      "duration": "N/A",
+      "error_message": null,
+      "failure_logs": null,
+      "command_executed": "axios GET /api/users/a594a005-1c83-4c80-b8c1-606528a3fc87",
+      "reason_for_failure": null
+    },
+    {
+      "test_id": "GET /api/users/a8a32d90-424e-4c1d-baec-47fc1acfa887",
+      "status": "passed",
+      "duration": "N/A",
+      "error_message": null,
+      "failure_logs": null,
+      "command_executed": "axios GET /api/users/a8a32d90-424e-4c1d-baec-47fc1acfa887",
+      "reason_for_failure": null
+    },
+    {
+      "test_id": "GET /api/users/search?query=test",
+      "status": "passed",
+      "duration": "N/A",
+      "error_message": null,
+      "failure_logs": null,
+      "command_executed": "axios GET /api/users/search?query=test",
+      "reason_for_failure": null
+    },
+    {
+      "test_id": "PUT /api/users/a594a005-1c83-4c80-b8c1-606528a3fc87",
+      "status": "passed",
+      "duration": "N/A",
+      "error_message": null,
+      "failure_logs": null,
+      "command_executed": "axios PUT /api/users/a594a005-1c83-4c80-b8c1-606528a3fc87",
+      "reason_for_failure": null
+    },
+    {
+      "test_id": "DELETE /api/users/a594a005-1c83-4c80-b8c1-606528a3fc87",
+      "status": "passed",
+      "duration": "N/A",
+      "error_message": null,
+      "failure_logs": null,
+      "command_executed": "axios DELETE /api/users/a594a005-1c83-4c80-b8c1-606528a3fc87",
+      "reason_for_failure": null
+    },
+    {
+      "test_id": "DELETE /api/users/a8a32d90-424e-4c1d-baec-47fc1acfa887",
+      "status": "passed",
+      "duration": "N/A",
+      "error_message": null,
+      "failure_logs": null,
+      "command_executed": "axios DELETE /api/users/a8a32d90-424e-4c1d-baec-47fc1acfa887",
+      "reason_for_failure": null
+    },
+    {
+      "test_id": "GET /api/users/a594a005-1c83-4c80-b8c1-606528a3fc87 (After Deletion - Should 404)",
+      "status": "passed",
+      "duration": "N/A",
+      "error_message": null,
+      "failure_logs": null,
+      "command_executed": "axios GET /api/users/a594a005-1c83-4c80-b8c1-606528a3fc87 (After Deletion - Should 404)",
+      "reason_for_failure": null
+    },
+    {
+      "test_id": "GET /api/users/a8a32d90-424e-4c1d-baec-47fc1acfa887 (After Deletion - Should 404)",
+      "status": "passed",
+      "duration": "N/A",
+      "error_message": null,
+      "failure_logs": null,
+      "command_executed": "axios GET /api/users/a8a32d90-424e-4c1d-baec-47fc1acfa887 (After Deletion - Should 404)",
+      "reason_for_failure": null
+    },
+    {
+      "test_id": "POST /api/users (Invalid Data - Should 400)",
+      "status": "passed",
+      "duration": "N/A",
+      "error_message": null,
+      "failure_logs": null,
+      "command_executed": "axios POST /api/users (Invalid Data - Should 400)",
+      "reason_for_failure": null
+    }
+  ],
+  "duration": "0.28 seconds"
+}
