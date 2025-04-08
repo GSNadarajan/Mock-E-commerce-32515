@@ -1,126 +1,126 @@
 {
   "total": 13,
-  "passed": 0,
-  "failed": 6,
-  "skipped": 7,
+  "passed": 13,
+  "failed": 0,
+  "skipped": 0,
   "tests": [
     {
       "test_id": "GET /api/users (Initial)",
-      "status": "failed",
+      "status": "passed",
       "duration": "N/A",
-      "error_message": "connect ECONNREFUSED ::1:3000",
+      "error_message": null,
       "failure_logs": null,
       "command_executed": "axios GET /api/users (Initial)",
-      "reason_for_failure": "connect ECONNREFUSED ::1:3000"
+      "reason_for_failure": null
     },
     {
       "test_id": "POST /api/users (User 1)",
-      "status": "failed",
+      "status": "passed",
       "duration": "N/A",
-      "error_message": "connect ECONNREFUSED ::1:3000",
+      "error_message": null,
       "failure_logs": null,
       "command_executed": "axios POST /api/users (User 1)",
-      "reason_for_failure": "connect ECONNREFUSED ::1:3000"
+      "reason_for_failure": null
     },
     {
       "test_id": "POST /api/users (User 2)",
-      "status": "failed",
+      "status": "passed",
       "duration": "N/A",
-      "error_message": "connect ECONNREFUSED ::1:3000",
+      "error_message": null,
       "failure_logs": null,
       "command_executed": "axios POST /api/users (User 2)",
-      "reason_for_failure": "connect ECONNREFUSED ::1:3000"
+      "reason_for_failure": null
     },
     {
       "test_id": "GET /api/users (After Creation)",
-      "status": "failed",
+      "status": "passed",
       "duration": "N/A",
-      "error_message": "connect ECONNREFUSED ::1:3000",
+      "error_message": null,
       "failure_logs": null,
       "command_executed": "axios GET /api/users (After Creation)",
-      "reason_for_failure": "connect ECONNREFUSED ::1:3000"
+      "reason_for_failure": null
     },
     {
-      "test_id": "GET /api/users/:id (User 1)",
-      "status": "skipped",
+      "test_id": "GET /api/users/400675db-5115-4c07-9d15-537f6acff0e4",
+      "status": "passed",
       "duration": "N/A",
       "error_message": null,
       "failure_logs": null,
-      "command_executed": "axios GET /api/users/:id (User 1)",
-      "reason_for_failure": "User creation failed"
+      "command_executed": "axios GET /api/users/400675db-5115-4c07-9d15-537f6acff0e4",
+      "reason_for_failure": null
     },
     {
-      "test_id": "GET /api/users/:id (User 2)",
-      "status": "skipped",
+      "test_id": "GET /api/users/1012d2c5-1dd8-4ca7-817d-a0e986fd79cb",
+      "status": "passed",
       "duration": "N/A",
       "error_message": null,
       "failure_logs": null,
-      "command_executed": "axios GET /api/users/:id (User 2)",
-      "reason_for_failure": "User creation failed"
+      "command_executed": "axios GET /api/users/1012d2c5-1dd8-4ca7-817d-a0e986fd79cb",
+      "reason_for_failure": null
     },
     {
       "test_id": "GET /api/users/search?query=test",
-      "status": "failed",
+      "status": "passed",
       "duration": "N/A",
-      "error_message": "connect ECONNREFUSED ::1:3000",
+      "error_message": null,
       "failure_logs": null,
       "command_executed": "axios GET /api/users/search?query=test",
-      "reason_for_failure": "connect ECONNREFUSED ::1:3000"
+      "reason_for_failure": null
     },
     {
-      "test_id": "PUT /api/users/:id",
-      "status": "skipped",
+      "test_id": "PUT /api/users/400675db-5115-4c07-9d15-537f6acff0e4",
+      "status": "passed",
       "duration": "N/A",
       "error_message": null,
       "failure_logs": null,
-      "command_executed": "axios PUT /api/users/:id",
-      "reason_for_failure": "User creation failed"
+      "command_executed": "axios PUT /api/users/400675db-5115-4c07-9d15-537f6acff0e4",
+      "reason_for_failure": null
     },
     {
-      "test_id": "DELETE /api/users/:id (User 1)",
-      "status": "skipped",
+      "test_id": "DELETE /api/users/400675db-5115-4c07-9d15-537f6acff0e4",
+      "status": "passed",
       "duration": "N/A",
       "error_message": null,
       "failure_logs": null,
-      "command_executed": "axios DELETE /api/users/:id (User 1)",
-      "reason_for_failure": "User creation failed"
+      "command_executed": "axios DELETE /api/users/400675db-5115-4c07-9d15-537f6acff0e4",
+      "reason_for_failure": null
     },
     {
-      "test_id": "DELETE /api/users/:id (User 2)",
-      "status": "skipped",
+      "test_id": "DELETE /api/users/1012d2c5-1dd8-4ca7-817d-a0e986fd79cb",
+      "status": "passed",
       "duration": "N/A",
       "error_message": null,
       "failure_logs": null,
-      "command_executed": "axios DELETE /api/users/:id (User 2)",
-      "reason_for_failure": "User creation failed"
+      "command_executed": "axios DELETE /api/users/1012d2c5-1dd8-4ca7-817d-a0e986fd79cb",
+      "reason_for_failure": null
     },
     {
-      "test_id": "GET /api/users/:id (After Deletion - User 1)",
-      "status": "skipped",
+      "test_id": "GET /api/users/400675db-5115-4c07-9d15-537f6acff0e4 (After Deletion - Should 404)",
+      "status": "passed",
       "duration": "N/A",
       "error_message": null,
       "failure_logs": null,
-      "command_executed": "axios GET /api/users/:id (After Deletion - User 1)",
-      "reason_for_failure": "User creation failed"
+      "command_executed": "axios GET /api/users/400675db-5115-4c07-9d15-537f6acff0e4 (After Deletion - Should 404)",
+      "reason_for_failure": null
     },
     {
-      "test_id": "GET /api/users/:id (After Deletion - User 2)",
-      "status": "skipped",
+      "test_id": "GET /api/users/1012d2c5-1dd8-4ca7-817d-a0e986fd79cb (After Deletion - Should 404)",
+      "status": "passed",
       "duration": "N/A",
       "error_message": null,
       "failure_logs": null,
-      "command_executed": "axios GET /api/users/:id (After Deletion - User 2)",
-      "reason_for_failure": "User creation failed"
+      "command_executed": "axios GET /api/users/1012d2c5-1dd8-4ca7-817d-a0e986fd79cb (After Deletion - Should 404)",
+      "reason_for_failure": null
     },
     {
-      "test_id": "POST /api/users (Invalid Data)",
-      "status": "failed",
+      "test_id": "POST /api/users (Invalid Data - Should 400)",
+      "status": "passed",
       "duration": "N/A",
-      "error_message": "connect ECONNREFUSED ::1:3000",
+      "error_message": null,
       "failure_logs": null,
-      "command_executed": "axios POST /api/users (Invalid Data)",
-      "reason_for_failure": "connect ECONNREFUSED ::1:3000"
+      "command_executed": "axios POST /api/users (Invalid Data - Should 400)",
+      "reason_for_failure": null
     }
   ],
-  "duration": "0.07 seconds"
+  "duration": "0.27 seconds"
 }
