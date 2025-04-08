@@ -3,6 +3,7 @@ const cors = require('cors');
 const morgan = require('morgan');
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./config/swagger');
+const { authenticateToken } = require('./middleware/auth');
 
 const app = express();
 
@@ -12,7 +13,18 @@ app.use(express.json());
 app.use(morgan('dev'));
 
 // Swagger documentation
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
+  swaggerOptions: {
+    securityDefinitions: {
+      bearerAuth: {
+        type: 'apiKey',
+        name: 'Authorization',
+        scheme: 'bearer',
+        in: 'header',
+      },
+    },
+  },
+}));
 
 // Routes
 app.use('/api/orders', require('./routes/orders'));

@@ -1,4 +1,5 @@
 const OrderModel = require('../models/orderModel');
+const userService = require('../services/userService');
 
 /**
  * Order Controller - Handles business logic for order operations
@@ -32,6 +33,11 @@ class OrderController {
         return res.status(404).json({ error: 'Order not found' });
       }
       
+      // Check if user is authorized to view this order
+      if (req.user.role !== 'admin' && req.user.id !== order.userId) {
+        return res.status(403).json({ error: 'Access denied. You can only view your own orders.' });
+      }
+      
       res.status(200).json(order);
     } catch (error) {
       console.error(`Error getting order ${req.params.id}:`, error);
@@ -62,6 +68,20 @@ class OrderController {
   static async createOrder(req, res) {
     try {
       const orderData = req.body;
+      
+      // Ensure the user can only create orders for themselves unless they're an admin
+      if (req.user.role !== 'admin' && req.user.id !== orderData.userId) {
+        return res.status(403).json({ error: 'Access denied. You can only create orders for yourself.' });
+      }
+      
+      // Validate that the user exists
+      const token = req.headers['authorization'].split(' ')[1];
+      const userExists = await userService.validateUser(orderData.userId, token);
+      
+      if (!userExists) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+      
       const newOrder = await OrderModel.createOrder(orderData);
       res.status(201).json(newOrder);
     } catch (error) {
@@ -77,12 +97,19 @@ class OrderController {
    */
   static async updateOrder(req, res) {
     try {
-      const updatedOrder = await OrderModel.updateOrder(req.params.id, req.body);
+      // First get the order to check ownership
+      const order = await OrderModel.getOrderById(req.params.id);
       
-      if (!updatedOrder) {
+      if (!order) {
         return res.status(404).json({ error: 'Order not found' });
       }
       
+      // Check if user is authorized to update this order
+      if (req.user.role !== 'admin' && req.user.id !== order.userId) {
+        return res.status(403).json({ error: 'Access denied. You can only update your own orders.' });
+      }
+      
+      const updatedOrder = await OrderModel.updateOrder(req.params.id, req.body);
       res.status(200).json(updatedOrder);
     } catch (error) {
       console.error(`Error updating order ${req.params.id}:`, error);
@@ -97,12 +124,19 @@ class OrderController {
    */
   static async deleteOrder(req, res) {
     try {
-      const deleted = await OrderModel.deleteOrder(req.params.id);
+      // First get the order to check ownership
+      const order = await OrderModel.getOrderById(req.params.id);
       
-      if (!deleted) {
+      if (!order) {
         return res.status(404).json({ error: 'Order not found' });
       }
       
+      // Check if user is authorized to delete this order
+      if (req.user.role !== 'admin' && req.user.id !== order.userId) {
+        return res.status(403).json({ error: 'Access denied. You can only delete your own orders.' });
+      }
+      
+      const deleted = await OrderModel.deleteOrder(req.params.id);
       res.status(200).json({ message: 'Order deleted successfully' });
     } catch (error) {
       console.error(`Error deleting order ${req.params.id}:`, error);

@@ -1,4 +1,5 @@
 const CartModel = require('../models/cartModel');
+const userService = require('../services/userService');
 
 /**
  * Cart Controller - Handles business logic for cart operations
@@ -33,6 +34,14 @@ class CartController {
     try {
       const { userId } = req.params;
       const item = req.body;
+      
+      // Validate that the user exists
+      const token = req.headers['authorization'].split(' ')[1];
+      const userExists = await userService.validateUser(userId, token);
+      
+      if (!userExists) {
+        return res.status(404).json({ error: 'User not found' });
+      }
       
       const updatedCart = await CartModel.addItemToCart(userId, item);
       res.status(200).json(updatedCart);
