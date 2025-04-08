@@ -1,0 +1,5 @@
+{
+  "task_description": "{'component_name': 'User Management Component', 'description': '**Core Technologies:**\n\n1. Primary Programming Languages:\n- Node.js v16+ \n- JavaScript ES6+\n\n2. Key Frameworks and Libraries:\n- Express.js v4.17+ (Core framework)\n- Passport.js v0.6+ (Authentication)\n- Bcrypt v5.0+ (Password hashing)\n- Express-session v1.17+ (Session management)\n- Express-validator v6.14+ (Input validation)\n- Nodemailer v6.7+ (Email notifications)\n- JsonWebToken v8.5+ (JWT handling)\n\n3. Database Technologies:\n- JSON file-based storage using Node.js fs module\n- UUID v8.3+ for unique identifier generation\n\n4. Runtime Environment:\n- Node.js runtime v16+\n- NPM v8+\n\n**Build and Development Tools:**\n\n1. Build System:\n- NPM (Node Package Manager)\n- Nodemon for development auto-reload\n\n2. Development Tools:\n- ESLint for code quality\n- Jest for unit testing\n- Swagger UI for API documentation\n- Postman for API testing', 'framework': None, 'interfaces': '', 'algorithms': '', 'pseudocode': '', 'figma_components': []}",
+  "tasks": {},
+  "next_task_id": 1
+}
