@@ -4,11 +4,16 @@
  */
 
 const fs = require('fs').promises;
+const fsExtra = require('fs-extra');
 const path = require('path');
 const { v4: uuidv4 } = require('uuid');
 
-// Path to the users JSON file
-const dbPath = path.join(__dirname, '../data/users.json');
+// Path to the users JSON file and directory
+const dataDir = path.join(__dirname, '../data');
+const dbPath = path.join(dataDir, 'users.json');
+
+// File lock status
+let isWriting = false;
 
 /**
  * UserModel class for handling user data operations
@@ -16,14 +21,53 @@ const dbPath = path.join(__dirname, '../data/users.json');
 class UserModel {
   /**
    * Initialize the users.json file if it doesn't exist
+   * Ensures the data directory exists and creates the file with proper structure
    * @returns {Promise<void>}
    */
   static async initialize() {
     try {
-      await fs.access(dbPath);
+      // Ensure the data directory exists
+      await fsExtra.ensureDir(dataDir);
+      
+      try {
+        // Check if the file exists
+        await fs.access(dbPath);
+        
+        // Validate file structure
+        try {
+          const data = await fs.readFile(dbPath, 'utf8');
+          const parsedData = JSON.parse(data);
+          
+          // Check if the file has the correct structure
+          if (!parsedData.users || !Array.isArray(parsedData.users)) {
+            console.warn('users.json has invalid structure. Recreating with proper structure.');
+            await this._writeData({ 
+              schemaVersion: '1.0',
+              users: [] 
+            });
+          } else if (!parsedData.schemaVersion) {
+            // Add schema version if it doesn't exist
+            parsedData.schemaVersion = '1.0';
+            await this._writeData(parsedData);
+          }
+        } catch (parseError) {
+          console.error('Error parsing users.json:', parseError.message);
+          console.warn('Recreating users.json with proper structure.');
+          await this._writeData({ 
+            schemaVersion: '1.0',
+            users: [] 
+          });
+        }
+      } catch (accessError) {
+        // File doesn't exist, create it with empty users array and schema version
+        await this._writeData({ 
+          schemaVersion: '1.0',
+          users: [] 
+        });
+      }
     } catch (error) {
-      // File doesn't exist, create it with empty users array
-      await fs.writeFile(dbPath, JSON.stringify({ users: [] }, null, 2));
+      console.error('Failed to initialize users database:', error);
+      throw new Error(`Failed to initialize users database: ${error.message}`);
     }
   }
 
@@ -35,25 +79,53 @@ class UserModel {
   static async _readData() {
     try {
       const data = await fs.readFile(dbPath, 'utf8');
-      return JSON.parse(data);
+      try {
+        const parsedData = JSON.parse(data);
+        // Ensure the data has the expected structure
+        if (!parsedData.users || !Array.isArray(parsedData.users)) {
+          console.warn('users.json has invalid structure. Returning empty users array.');
+          return { schemaVersion: '1.0', users: [] };
+        }
+        return parsedData;
+      } catch (parseError) {
+        console.error('Error parsing users.json:', parseError.message);
+        throw new Error(`Error parsing user data: ${parseError.message}`);
+      }
     } catch (error) {
       if (error.code === 'ENOENT') {
         // File doesn't exist, initialize it
         await this.initialize();
-        return { users: [] };
+        return { schemaVersion: '1.0', users: [] };
       }
       throw new Error(`Error reading user data: ${error.message}`);
     }
   }
 
   /**
-   * Write users data to JSON file
+   * Write users data to JSON file with improved error handling and file locking
    * @param {Object} data - The data to write
    * @returns {Promise<void>}
    * @private
    */
   static async _writeData(data) {
+    // Simple file locking mechanism to prevent race conditions
+    if (isWriting) {
+      // Wait a bit and retry if another write operation is in progress
+      await new Promise(resolve => setTimeout(resolve, 100));
+      return this._writeData(data);
+    }
+    
+    isWriting = true;
+    
     try {
+      // Validate data structure before writing
+      if (!data.users || !Array.isArray(data.users)) {
+        throw new Error('Invalid data structure: users array is required');
+      }
+      
+      // Ensure the data directory exists
+      await fsExtra.ensureDir(dataDir);
+      
       // Write to a temporary file first to ensure atomic operation
       const tempPath = `${dbPath}.tmp`;
       await fs.writeFile(tempPath, JSON.stringify(data, null, 2));
@@ -61,7 +133,11 @@ class UserModel {
       // Rename the temporary file to the actual file (atomic operation)
       await fs.rename(tempPath, dbPath);
     } catch (error) {
+      console.error('Error writing user data:', error);
       throw new Error(`Error writing user data: ${error.message}`);
+    } finally {
+      // Release the lock
+      isWriting = false;
     }
   }
 
@@ -85,13 +161,17 @@ class UserModel {
   }
 
   /**
-   * Get user by email
+   * Get user by email (case-insensitive)
    * @param {string} email - User email
    * @returns {Promise<Object|null>} User object or null if not found
    */
   static async getUserByEmail(email) {
+    if (!email) return null;
+    
     const data = await this._readData();
-    return data.users.find(user => user.email === email) || null;
+    return data.users.find(user => 
+      user.email && user.email.toLowerCase() === email.toLowerCase()
+    ) || null;
   }
 
   /**
@@ -115,17 +195,28 @@ class UserModel {
   }
 
   /**
-   * Create a new user
+   * Create a new user with validation
    * @param {Object} userData - User data
    * @returns {Promise<Object>} Created user object
    */
   static async createUser(userData) {
+    // Validate required fields
+    if (!userData.username || !userData.email || !userData.password) {
+      throw new Error('Username, email, and password are required');
+    }
+    
+    // Check if email is already in use
+    const existingUser = await this.getUserByEmail(userData.email);
+    if (existingUser) {
+      throw new Error('Email is already in use');
+    }
+    
     const data = await this._readData();
     
     const newUser = {
       id: uuidv4(),
       username: userData.username,
-      email: userData.email,
+      email: userData.email.toLowerCase(), // Store email in lowercase for case-insensitive comparisons
       password: userData.password, // Should be pre-hashed
       role: userData.role || 'user',
       isVerified: userData.isVerified !== undefined ? userData.isVerified : false,
@@ -270,6 +361,9 @@ class UserModel {
 }
 
 // Initialize the users.json file when the module is loaded
-UserModel.initialize().catch(err => console.error('Failed to initialize users database:', err));
+UserModel.initialize().catch(err => {
+  console.error('Failed to initialize users database:', err);
+  // In a production environment, you might want to exit the process or implement a retry mechanism
+});
 
 module.exports = UserModel;

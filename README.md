@@ -216,4 +216,149 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Disclaimer
 
-This is a mock implementation intended for demonstration and development purposes only. It is not suitable for production use without additional security measures and proper database integration.
+This is a mock implementation intended for demonstration and development purposes only. It is not suitable for production use without additional security measures and proper database integration.# User Management Component
+
+## Overview
+This component provides user management functionality for the e-commerce application, including user registration, authentication, profile management, and more.
+
+## Core Technologies
+- Node.js v16+
+- Express.js v4.17+
+- JSON file-based storage using Node.js fs module
+- UUID v8.3+ for unique identifier generation
+- Express-validator v6.14+ for input validation
+
+## Features
+- User registration and authentication
+- User profile management
+- Password reset functionality
+- Email verification
+- Role-based access control
+
+## API Endpoints
+
+### User Management
+- `GET /api/users` - Get all users
+- `GET /api/users/search?query=<search_term>` - Search users by username or email
+- `GET /api/users/:id` - Get user by ID
+- `POST /api/users` - Create a new user
+- `PUT /api/users/:id` - Update user by ID
+- `DELETE /api/users/:id` - Delete user by ID
+
+## Data Storage
+User data is stored in a JSON file (`src/data/users.json`) with the following structure:
+
+```json
+{
+  "schemaVersion": "1.0",
+  "users": [
+    {
+      "id": "uuid",
+      "username": "string",
+      "email": "string",
+      "password": "string (hashed)",
+      "role": "string",
+      "isVerified": "boolean",
+      "verificationToken": "string or null",
+      "resetToken": "string or null",
+      "resetTokenExpiry": "string (ISO date) or null",
+      "createdAt": "string (ISO date)",
+      "updatedAt": "string (ISO date)",
+      "lastLogin": "string (ISO date) or null"
+    }
+  ]
+}
+```
+
+## Getting Started
+
+### Installation
+```bash
+npm install
+```
+
+### Running the Application
+```bash
+npm start
+```
+
+### Development Mode
+```bash
+npm run dev
+```
+
+## API Documentation
+API documentation is available at `/api-docs` when the application is running.
+# User Management Component
+
+## Overview
+This component provides user management functionality for the e-commerce application, including user registration, authentication, profile management, and more.
+
+## Core Technologies
+- Node.js v16+
+- Express.js v4.17+
+- JSON file-based storage using Node.js fs module
+- UUID v8.3+ for unique identifier generation
+- Express-validator v6.14+ for input validation
+
+## Features
+- User registration and authentication
+- User profile management
+- Password reset functionality
+- Email verification
+- Role-based access control
+
+## API Endpoints
+
+### User Management
+- `GET /api/users` - Get all users
+- `GET /api/users/search?query=<search_term>` - Search users by username or email
+- `GET /api/users/:id` - Get user by ID
+- `POST /api/users` - Create a new user
+- `PUT /api/users/:id` - Update user by ID
+- `DELETE /api/users/:id` - Delete user by ID
+
+## Data Storage
+User data is stored in a JSON file (`src/data/users.json`) with the following structure:
+
+```json
+{
+  "schemaVersion": "1.0",
+  "users": [
+    {
+      "id": "uuid",
+      "username": "string",
+      "email": "string",
+      "password": "string (hashed)",
+      "role": "string",
+      "isVerified": "boolean",
+      "verificationToken": "string or null",
+      "resetToken": "string or null",
+      "resetTokenExpiry": "string (ISO date) or null",
+      "createdAt": "string (ISO date)",
+      "updatedAt": "string (ISO date)",
+      "lastLogin": "string (ISO date) or null"
+    }
+  ]
+}
+```
+
+## Getting Started
+
+### Installation
+```bash
+npm install
+```
+
+### Running the Application
+```bash
+npm start
+```
+
+### Development Mode
+```bash
+npm run dev
+```
+
+## API Documentation
+API documentation is available at `/api-docs` when the application is running.
