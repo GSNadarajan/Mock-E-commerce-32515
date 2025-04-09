@@ -176,6 +176,29 @@ const orderStatusUpdateValidation = [
   validate
 ];
 
+// Validation rules for payment ID parameter
+const paymentIdValidation = [
+  param('id')
+    .notEmpty().withMessage('Payment ID is required'),
+  validate
+];
+
+// Validation rules for payment creation
+const paymentCreateValidation = [
+  body('user_id')
+    .notEmpty().withMessage('User ID is required'),
+  body('order_id')
+    .notEmpty().withMessage('Order ID is required'),
+  body('payment_method')
+    .notEmpty().withMessage('Payment method is required')
+    .isIn(['credit_card', 'debit_card', 'paypal', 'bank_transfer', 'crypto'])
+    .withMessage('Invalid payment method'),
+  body('amount')
+    .notEmpty().withMessage('Amount is required')
+    .isFloat({ min: 0.01 }).withMessage('Amount must be a positive number'),
+  validate
+];
+
 module.exports = {
   registerValidation,
   loginValidation,
@@ -189,5 +212,7 @@ module.exports = {
   orderIdValidation,
   orderCreateValidation,
   orderUpdateValidation,
-  orderStatusUpdateValidation
+  orderStatusUpdateValidation,
+  paymentIdValidation,
+  paymentCreateValidation
 };

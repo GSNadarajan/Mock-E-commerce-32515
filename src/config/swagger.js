@@ -27,7 +27,8 @@ const options = {
   apis: [
     './src/routes/*.js',
     './src/products/routes/*.js',
-    './src/orders/routes/*.js'
+    './src/orders/routes/*.js',
+    './src/payments/routes/*.js'
   ], // Path to the API routes
 };
 
