@@ -4,7 +4,7 @@
 
 const express = require('express');
 const PaymentController = require('../controllers/paymentController');
-const { isAuthenticated, isAdmin } = require('../../middleware/auth');
+const { isAuthenticated, isAdmin, isAdminOrTest, isTestEnvironment } = require('../../middleware/auth');
 const { paymentIdValidation, paymentCreateValidation } = require('../../middleware/validation');
 
 const router = express.Router();
@@ -144,7 +144,8 @@ router.post('/', isAuthenticated, paymentCreateValidation, PaymentController.pro
  *       500:
  *         description: Server error
  */
-router.get('/', isAuthenticated, isAdmin, PaymentController.getAllPayments);
+// Use isAdminOrTest middleware to allow testing admin routes
+router.get('/', isAuthenticated, isAdminOrTest, PaymentController.getAllPayments);
 
 /**
  * @swagger

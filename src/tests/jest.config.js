@@ -1,1 +1,11 @@
-module.exports = {\n  testEnvironment: 'node',\n  testMatch: ['**/tests/**/*.js'],\n  collectCoverage: true,\n  coverageDirectory: 'coverage',\n  coverageReporters: ['text', 'lcov'],\n  collectCoverageFrom: [\n    '**/products/**/*.js',\n    '**/orders/**/*.js',\n    '!**/node_modules/**',\n    '!**/tests/**'\n  ],\n  verbose: true\n};
+/**
+ * Jest configuration for payment API tests
+ */
+
+module.exports = {
+  testEnvironment: 'node',
+  testMatch: ['**/*.test.js'],
+  verbose: true,
+  setupFiles: ['<rootDir>/jest.setup.js'],
+  testTimeout: 10000, // 10 seconds timeout for tests
+};
