@@ -4,9 +4,9 @@ const options = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'User Management API',
+      title: 'E-commerce API',
       version: '1.0.0',
-      description: 'API documentation for User Management service',
+      description: 'API documentation for E-commerce service with User and Product Management',
     },
     servers: [
       {

@@ -82,11 +82,67 @@ const userIdValidation = [
   validate
 ];
 
+// Validation rules for product ID parameter
+const productIdValidation = [
+  param('id')
+    .notEmpty().withMessage('Product ID is required'),
+  validate
+];
+
+// Validation rules for product creation
+const productCreateValidation = [
+  body('name')
+    .notEmpty().withMessage('Product name is required')
+    .isLength({ min: 2, max: 100 }).withMessage('Product name must be between 2 and 100 characters'),
+  body('price')
+    .notEmpty().withMessage('Product price is required')
+    .isFloat({ min: 0 }).withMessage('Product price must be a positive number'),
+  body('description')
+    .optional()
+    .isLength({ max: 1000 }).withMessage('Product description cannot exceed 1000 characters'),
+  body('category')
+    .optional()
+    .isLength({ min: 2, max: 50 }).withMessage('Category must be between 2 and 50 characters'),
+  body('imageUrl')
+    .optional()
+    .isURL().withMessage('Image URL must be a valid URL'),
+  body('stock')
+    .optional()
+    .isInt({ min: 0 }).withMessage('Stock must be a non-negative integer'),
+  validate
+];
+
+// Validation rules for product update
+const productUpdateValidation = [
+  body('name')
+    .optional()
+    .isLength({ min: 2, max: 100 }).withMessage('Product name must be between 2 and 100 characters'),
+  body('price')
+    .optional()
+    .isFloat({ min: 0 }).withMessage('Product price must be a positive number'),
+  body('description')
+    .optional()
+    .isLength({ max: 1000 }).withMessage('Product description cannot exceed 1000 characters'),
+  body('category')
+    .optional()
+    .isLength({ min: 2, max: 50 }).withMessage('Category must be between 2 and 50 characters'),
+  body('imageUrl')
+    .optional()
+    .isURL().withMessage('Image URL must be a valid URL'),
+  body('stock')
+    .optional()
+    .isInt({ min: 0 }).withMessage('Stock must be a non-negative integer'),
+  validate
+];
+
 module.exports = {
   registerValidation,
   loginValidation,
   passwordResetRequestValidation,
   passwordResetValidation,
   profileUpdateValidation,
-  userIdValidation
+  userIdValidation,
+  productIdValidation,
+  productCreateValidation,
+  productUpdateValidation
 };
