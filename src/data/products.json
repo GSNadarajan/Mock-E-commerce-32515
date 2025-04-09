@@ -1,4 +1,225 @@
 {
   "schemaVersion": "1.0",
-  "products": []
+  "products": [
+    {
+      "id": "p1001",
+      "name": "Smartphone X Pro",
+      "description": "Latest flagship smartphone with 6.7-inch AMOLED display, 128GB storage, and triple camera system",
+      "price": 899.99,
+      "category": "Electronics",
+      "imageUrl": "https://example.com/images/smartphone-x-pro.jpg",
+      "stock": 45,
+      "createdAt": "2023-04-01T10:00:00.000Z",
+      "updatedAt": "2023-04-01T10:00:00.000Z"
+    },
+    {
+      "id": "p1002",
+      "name": "Wireless Noise-Cancelling Headphones",
+      "description": "Premium over-ear headphones with active noise cancellation and 30-hour battery life",
+      "price": 249.99,
+      "category": "Electronics",
+      "imageUrl": "https://example.com/images/wireless-headphones.jpg",
+      "stock": 78,
+      "createdAt": "2023-04-01T10:05:00.000Z",
+      "updatedAt": "2023-04-01T10:05:00.000Z"
+    },
+    {
+      "id": "p1003",
+      "name": "Smart Watch Series 5",
+      "description": "Fitness and health tracking smartwatch with heart rate monitor and GPS",
+      "price": 299.99,
+      "category": "Electronics",
+      "imageUrl": "https://example.com/images/smart-watch-5.jpg",
+      "stock": 32,
+      "createdAt": "2023-04-01T10:10:00.000Z",
+      "updatedAt": "2023-04-01T10:10:00.000Z"
+    },
+    {
+      "id": "p1004",
+      "name": "Bluetooth Portable Speaker",
+      "description": "Waterproof portable speaker with 20-hour battery life and deep bass",
+      "price": 79.99,
+      "category": "Electronics",
+      "imageUrl": "https://example.com/images/bluetooth-speaker.jpg",
+      "stock": 120,
+      "createdAt": "2023-04-01T10:15:00.000Z",
+      "updatedAt": "2023-04-01T10:15:00.000Z"
+    },
+    {
+      "id": "p1005",
+      "name": "Men's Casual Denim Jacket",
+      "description": "Classic denim jacket with comfortable fit and durable construction",
+      "price": 59.99,
+      "category": "Clothing",
+      "imageUrl": "https://example.com/images/denim-jacket.jpg",
+      "stock": 85,
+      "createdAt": "2023-04-01T10:20:00.000Z",
+      "updatedAt": "2023-04-01T10:20:00.000Z"
+    },
+    {
+      "id": "p1006",
+      "name": "Women's Athletic Leggings",
+      "description": "High-waisted compression leggings with moisture-wicking fabric",
+      "price": 34.99,
+      "category": "Clothing",
+      "imageUrl": "https://example.com/images/athletic-leggings.jpg",
+      "stock": 110,
+      "createdAt": "2023-04-01T10:25:00.000Z",
+      "updatedAt": "2023-04-01T10:25:00.000Z"
+    },
+    {
+      "id": "p1007",
+      "name": "Unisex Cotton T-Shirt",
+      "description": "Soft, breathable cotton t-shirt available in multiple colors",
+      "price": 19.99,
+      "category": "Clothing",
+      "imageUrl": "https://example.com/images/cotton-tshirt.jpg",
+      "stock": 200,
+      "createdAt": "2023-04-01T10:30:00.000Z",
+      "updatedAt": "2023-04-01T10:30:00.000Z"
+    },
+    {
+      "id": "p1008",
+      "name": "Winter Knit Beanie",
+      "description": "Warm knitted beanie hat for cold weather",
+      "price": 14.99,
+      "category": "Clothing",
+      "imageUrl": "https://example.com/images/knit-beanie.jpg",
+      "stock": 150,
+      "createdAt": "2023-04-01T10:35:00.000Z",
+      "updatedAt": "2023-04-01T10:35:00.000Z"
+    },
+    {
+      "id": "p1009",
+      "name": "Stainless Steel Cookware Set",
+      "description": "10-piece cookware set with non-stick coating and heat-resistant handles",
+      "price": 129.99,
+      "category": "Home & Kitchen",
+      "imageUrl": "https://example.com/images/cookware-set.jpg",
+      "stock": 25,
+      "createdAt": "2023-04-01T10:40:00.000Z",
+      "updatedAt": "2023-04-01T10:40:00.000Z"
+    },
+    {
+      "id": "p1010",
+      "name": "Robot Vacuum Cleaner",
+      "description": "Smart robot vacuum with mapping technology and app control",
+      "price": 249.99,
+      "category": "Home & Kitchen",
+      "imageUrl": "https://example.com/images/robot-vacuum.jpg",
+      "stock": 18,
+      "createdAt": "2023-04-01T10:45:00.000Z",
+      "updatedAt": "2023-04-01T10:45:00.000Z"
+    },
+    {
+      "id": "p1011",
+      "name": "Luxury Bed Sheet Set",
+      "description": "Soft microfiber bed sheets with deep pockets, includes fitted sheet, flat sheet, and pillowcases",
+      "price": 49.99,
+      "category": "Home & Kitchen",
+      "imageUrl": "https://example.com/images/bed-sheets.jpg",
+      "stock": 60,
+      "createdAt": "2023-04-01T10:50:00.000Z",
+      "updatedAt": "2023-04-01T10:50:00.000Z"
+    },
+    {
+      "id": "p1012",
+      "name": "Ceramic Coffee Mug Set",
+      "description": "Set of 4 ceramic coffee mugs with modern design",
+      "price": 24.99,
+      "category": "Home & Kitchen",
+      "imageUrl": "https://example.com/images/coffee-mugs.jpg",
+      "stock": 95,
+      "createdAt": "2023-04-01T10:55:00.000Z",
+      "updatedAt": "2023-04-01T10:55:00.000Z"
+    },
+    {
+      "id": "p1013",
+      "name": "Bestselling Novel: The Silent Echo",
+      "description": "Award-winning mystery thriller by renowned author",
+      "price": 15.99,
+      "category": "Books",
+      "imageUrl": "https://example.com/images/silent-echo-book.jpg",
+      "stock": 70,
+      "createdAt": "2023-04-01T11:00:00.000Z",
+      "updatedAt": "2023-04-01T11:00:00.000Z"
+    },
+    {
+      "id": "p1014",
+      "name": "Cookbook: International Cuisine",
+      "description": "Collection of recipes from around the world with step-by-step instructions",
+      "price": 29.99,
+      "category": "Books",
+      "imageUrl": "https://example.com/images/cookbook.jpg",
+      "stock": 45,
+      "createdAt": "2023-04-01T11:05:00.000Z",
+      "updatedAt": "2023-04-01T11:05:00.000Z"
+    },
+    {
+      "id": "p1015",
+      "name": "Children's Illustrated Encyclopedia",
+      "description": "Educational encyclopedia for children with colorful illustrations",
+      "price": 34.99,
+      "category": "Books",
+      "imageUrl": "https://example.com/images/children-encyclopedia.jpg",
+      "stock": 30,
+      "createdAt": "2023-04-01T11:10:00.000Z",
+      "updatedAt": "2023-04-01T11:10:00.000Z"
+    },
+    {
+      "id": "p1016",
+      "name": "Programming Guide: Full Stack Development",
+      "description": "Comprehensive guide to modern web development techniques",
+      "price": 45.99,
+      "category": "Books",
+      "imageUrl": "https://example.com/images/programming-book.jpg",
+      "stock": 25,
+      "createdAt": "2023-04-01T11:15:00.000Z",
+      "updatedAt": "2023-04-01T11:15:00.000Z"
+    },
+    {
+      "id": "p1017",
+      "name": "Yoga Mat",
+      "description": "Non-slip exercise yoga mat with carrying strap",
+      "price": 29.99,
+      "category": "Sports",
+      "imageUrl": "https://example.com/images/yoga-mat.jpg",
+      "stock": 80,
+      "createdAt": "2023-04-01T11:20:00.000Z",
+      "updatedAt": "2023-04-01T11:20:00.000Z"
+    },
+    {
+      "id": "p1018",
+      "name": "Basketball - Official Size",
+      "description": "Regulation size and weight basketball with superior grip",
+      "price": 24.99,
+      "category": "Sports",
+      "imageUrl": "https://example.com/images/basketball.jpg",
+      "stock": 65,
+      "createdAt": "2023-04-01T11:25:00.000Z",
+      "updatedAt": "2023-04-01T11:25:00.000Z"
+    },
+    {
+      "id": "p1019",
+      "name": "Fitness Resistance Bands Set",
+      "description": "Set of 5 resistance bands with different tension levels for home workouts",
+      "price": 19.99,
+      "category": "Sports",
+      "imageUrl": "https://example.com/images/resistance-bands.jpg",
+      "stock": 100,
+      "createdAt": "2023-04-01T11:30:00.000Z",
+      "updatedAt": "2023-04-01T11:30:00.000Z"
+    },
+    {
+      "id": "p1020",
+      "name": "Tennis Racket Pro",
+      "description": "Professional-grade tennis racket with carbon fiber frame",
+      "price": 89.99,
+      "category": "Sports",
+      "imageUrl": "https://example.com/images/tennis-racket.jpg",
+      "stock": 40,
+      "createdAt": "2023-04-01T11:35:00.000Z",
+      "updatedAt": "2023-04-01T11:35:00.000Z"
+    }
+  ]
 }

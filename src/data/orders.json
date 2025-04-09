@@ -1,4 +1,237 @@
 {
   "schemaVersion": "1.0",
-  "orders": []
+  "orders": [
+    {
+      "id": "ord1001",
+      "userId": "test",
+      "items": [
+        {
+          "productId": "p1001",
+          "name": "Smartphone X Pro",
+          "quantity": 1,
+          "price": 899.99
+        },
+        {
+          "productId": "p1002",
+          "name": "Wireless Noise-Cancelling Headphones",
+          "quantity": 1,
+          "price": 249.99
+        }
+      ],
+      "totalAmount": 1149.98,
+      "shippingAddress": {
+        "street": "123 Main St",
+        "city": "San Francisco",
+        "state": "CA",
+        "zipCode": "94105",
+        "country": "USA"
+      },
+      "status": "delivered",
+      "createdAt": "2023-04-05T14:30:00.000Z",
+      "updatedAt": "2023-04-08T09:15:00.000Z"
+    },
+    {
+      "id": "ord1002",
+      "userId": "test",
+      "items": [
+        {
+          "productId": "p1009",
+          "name": "Stainless Steel Cookware Set",
+          "quantity": 1,
+          "price": 129.99
+        },
+        {
+          "productId": "p1012",
+          "name": "Ceramic Coffee Mug Set",
+          "quantity": 2,
+          "price": 24.99
+        }
+      ],
+      "totalAmount": 179.97,
+      "shippingAddress": {
+        "street": "123 Main St",
+        "city": "San Francisco",
+        "state": "CA",
+        "zipCode": "94105",
+        "country": "USA"
+      },
+      "status": "shipped",
+      "createdAt": "2023-04-10T11:45:00.000Z",
+      "updatedAt": "2023-04-11T16:20:00.000Z"
+    },
+    {
+      "id": "ord1003",
+      "userId": "test",
+      "items": [
+        {
+          "productId": "p1013",
+          "name": "Bestselling Novel: The Silent Echo",
+          "quantity": 1,
+          "price": 15.99
+        },
+        {
+          "productId": "p1014",
+          "name": "Cookbook: International Cuisine",
+          "quantity": 1,
+          "price": 29.99
+        },
+        {
+          "productId": "p1016",
+          "name": "Programming Guide: Full Stack Development",
+          "quantity": 1,
+          "price": 45.99
+        }
+      ],
+      "totalAmount": 91.97,
+      "shippingAddress": {
+        "street": "456 Oak Avenue",
+        "city": "San Francisco",
+        "state": "CA",
+        "zipCode": "94108",
+        "country": "USA"
+      },
+      "status": "processing",
+      "createdAt": "2023-04-15T09:20:00.000Z",
+      "updatedAt": "2023-04-15T14:10:00.000Z"
+    },
+    {
+      "id": "ord1004",
+      "userId": "test",
+      "items": [
+        {
+          "productId": "p1005",
+          "name": "Men's Casual Denim Jacket",
+          "quantity": 1,
+          "price": 59.99
+        },
+        {
+          "productId": "p1007",
+          "name": "Unisex Cotton T-Shirt",
+          "quantity": 3,
+          "price": 19.99
+        }
+      ],
+      "totalAmount": 119.96,
+      "shippingAddress": {
+        "street": "123 Main St",
+        "city": "San Francisco",
+        "state": "CA",
+        "zipCode": "94105",
+        "country": "USA"
+      },
+      "status": "pending",
+      "createdAt": "2023-04-18T16:40:00.000Z",
+      "updatedAt": "2023-04-18T16:40:00.000Z"
+    },
+    {
+      "id": "ord1005",
+      "userId": "test",
+      "items": [
+        {
+          "productId": "p1017",
+          "name": "Yoga Mat",
+          "quantity": 1,
+          "price": 29.99
+        },
+        {
+          "productId": "p1019",
+          "name": "Fitness Resistance Bands Set",
+          "quantity": 1,
+          "price": 19.99
+        }
+      ],
+      "totalAmount": 49.98,
+      "shippingAddress": {
+        "street": "789 Pine Street",
+        "city": "San Francisco",
+        "state": "CA",
+        "zipCode": "94111",
+        "country": "USA"
+      },
+      "status": "cancelled",
+      "createdAt": "2023-04-12T10:15:00.000Z",
+      "updatedAt": "2023-04-13T09:30:00.000Z"
+    },
+    {
+      "id": "ord1006",
+      "userId": "test",
+      "items": [
+        {
+          "productId": "p1003",
+          "name": "Smart Watch Series 5",
+          "quantity": 1,
+          "price": 299.99
+        }
+      ],
+      "totalAmount": 299.99,
+      "shippingAddress": {
+        "street": "123 Main St",
+        "city": "San Francisco",
+        "state": "CA",
+        "zipCode": "94105",
+        "country": "USA"
+      },
+      "status": "delivered",
+      "createdAt": "2023-03-28T13:20:00.000Z",
+      "updatedAt": "2023-04-02T11:45:00.000Z"
+    },
+    {
+      "id": "ord1007",
+      "userId": "test",
+      "items": [
+        {
+          "productId": "p1010",
+          "name": "Robot Vacuum Cleaner",
+          "quantity": 1,
+          "price": 249.99
+        },
+        {
+          "productId": "p1011",
+          "name": "Luxury Bed Sheet Set",
+          "quantity": 2,
+          "price": 49.99
+        }
+      ],
+      "totalAmount": 349.97,
+      "shippingAddress": {
+        "street": "456 Oak Avenue",
+        "city": "San Francisco",
+        "state": "CA",
+        "zipCode": "94108",
+        "country": "USA"
+      },
+      "status": "processing",
+      "createdAt": "2023-04-19T09:10:00.000Z",
+      "updatedAt": "2023-04-19T14:25:00.000Z"
+    },
+    {
+      "id": "ord1008",
+      "userId": "test",
+      "items": [
+        {
+          "productId": "p1018",
+          "name": "Basketball - Official Size",
+          "quantity": 1,
+          "price": 24.99
+        },
+        {
+          "productId": "p1020",
+          "name": "Tennis Racket Pro",
+          "quantity": 1,
+          "price": 89.99
+        }
+      ],
+      "totalAmount": 114.98,
+      "shippingAddress": {
+        "street": "789 Pine Street",
+        "city": "San Francisco",
+        "state": "CA",
+        "zipCode": "94111",
+        "country": "USA"
+      },
+      "status": "pending",
+      "createdAt": "2023-04-20T15:30:00.000Z",
+      "updatedAt": "2023-04-20T15:30:00.000Z"
+    }
+  ]
 }
