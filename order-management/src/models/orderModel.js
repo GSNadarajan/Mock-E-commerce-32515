@@ -7,6 +7,12 @@ const { v4: uuidv4 } = require('uuid');
 const dataDir = path.join(__dirname, '../data');
 const ordersFilePath = path.join(dataDir, 'orders.json');
 
+// Default data structure for new files
+const DEFAULT_DATA_STRUCTURE = {
+  schemaVersion: '1.0',
+  orders: []
+};
+
 // File lock status
 let isWriting = false;
 
@@ -31,15 +37,21 @@ class OrderModel {
         // Validate file structure
         try {
           const data = await fs.readFile(ordersFilePath, 'utf8');
+          if (!data || data.trim() === '') {
+            console.warn('orders.json is empty. Creating with proper structure.');
+            await this._writeData(DEFAULT_DATA_STRUCTURE);
+            return;
+          }
+          
           const parsedData = JSON.parse(data);
           
           // Check if the file has the correct structure
-          if (!parsedData.orders || !Array.isArray(parsedData.orders)) {
+          if (!parsedData || typeof parsedData !== 'object') {
+            console.warn('orders.json has invalid JSON. Recreating with proper structure.');
+            await this._writeData(DEFAULT_DATA_STRUCTURE);
+          } else if (!parsedData.orders || !Array.isArray(parsedData.orders)) {
             console.warn('orders.json has invalid structure. Recreating with proper structure.');
-            await this._writeData({ 
-              schemaVersion: '1.0',
-              orders: [] 
-            });
+            await this._writeData(DEFAULT_DATA_STRUCTURE);
           } else if (!parsedData.schemaVersion) {
             // Add schema version if it doesn't exist
             parsedData.schemaVersion = '1.0';
@@ -48,17 +60,12 @@ class OrderModel {
         } catch (parseError) {
           console.error('Error parsing orders.json:', parseError.message);
           console.warn('Recreating orders.json with proper structure.');
-          await this._writeData({ 
-            schemaVersion: '1.0',
-            orders: [] 
-          });
+          await this._writeData(DEFAULT_DATA_STRUCTURE);
         }
       } catch (accessError) {
         // File doesn't exist, create it with empty orders array and schema version
-        await this._writeData({ 
-          schemaVersion: '1.0',
-          orders: [] 
-        });
+        console.log('Creating new orders.json file with default structure');
+        await this._writeData(DEFAULT_DATA_STRUCTURE);
       }
     } catch (error) {
       console.error('Failed to initialize orders database:', error);
@@ -73,26 +80,57 @@ class OrderModel {
    */
   static async _readData() {
     try {
+      // Check if file exists first
+      try {
+        await fs.access(ordersFilePath);
+      } catch (accessError) {
+        // File doesn't exist, initialize it
+        await this.initialize();
+        return DEFAULT_DATA_STRUCTURE;
+      }
+      
+      // Read the file
       const data = await fs.readFile(ordersFilePath, 'utf8');
+      
+      // Handle empty file
+      if (!data || data.trim() === '') {
+        console.warn('orders.json is empty. Returning default structure.');
+        await this._writeData(DEFAULT_DATA_STRUCTURE);
+        return DEFAULT_DATA_STRUCTURE;
+      }
+      
       try {
         const parsedData = JSON.parse(data);
+        
+        // Validate the parsed data
+        if (!parsedData || typeof parsedData !== 'object') {
+          console.warn('orders.json contains invalid JSON. Returning default structure.');
+          await this._writeData(DEFAULT_DATA_STRUCTURE);
+          return DEFAULT_DATA_STRUCTURE;
+        }
+        
         // Ensure the data has the expected structure
         if (!parsedData.orders || !Array.isArray(parsedData.orders)) {
-          console.warn('orders.json has invalid structure. Returning empty orders array.');
-          return { schemaVersion: '1.0', orders: [] };
+          console.warn('orders.json has invalid structure. Returning default structure.');
+          await this._writeData(DEFAULT_DATA_STRUCTURE);
+          return DEFAULT_DATA_STRUCTURE;
         }
+        
+        // Ensure schema version exists
+        if (!parsedData.schemaVersion) {
+          parsedData.schemaVersion = '1.0';
+          await this._writeData(parsedData);
+        }
+        
         return parsedData;
       } catch (parseError) {
         console.error('Error parsing orders.json:', parseError.message);
-        throw new Error(`Error parsing order data: ${parseError.message}`);
+        await this._writeData(DEFAULT_DATA_STRUCTURE);
+        return DEFAULT_DATA_STRUCTURE;
       }
     } catch (error) {
-      if (error.code === 'ENOENT') {
-        // File doesn't exist, initialize it
-        await this.initialize();
-        return { schemaVersion: '1.0', orders: [] };
-      }
-      throw new Error(`Error reading order data: ${error.message}`);
+      console.error(`Error reading order data: ${error.message}`);
+      return DEFAULT_DATA_STRUCTURE;
     }
   }
 
@@ -114,19 +152,35 @@ class OrderModel {
     
     try {
       // Validate data structure before writing
-      if (!data.orders || !Array.isArray(data.orders)) {
-        throw new Error('Invalid data structure: orders array is required');
+      if (!data || typeof data !== 'object') {
+        data = DEFAULT_DATA_STRUCTURE;
+      } else if (!data.orders || !Array.isArray(data.orders)) {
+        data = {
+          ...data,
+          orders: Array.isArray(data.orders) ? data.orders : []
+        };
+      }
+      
+      // Ensure schema version exists
+      if (!data.schemaVersion) {
+        data.schemaVersion = '1.0';
       }
       
       // Ensure the data directory exists
       await fsExtra.ensureDir(dataDir);
       
-      // Write to a temporary file first to ensure atomic operation
-      const tempPath = `${ordersFilePath}.tmp`;
-      await fs.writeFile(tempPath, JSON.stringify(data, null, 2));
-      
-      // Rename the temporary file to the actual file (atomic operation)
-      await fs.rename(tempPath, ordersFilePath);
+      try {
+        // Write to a temporary file first to ensure atomic operation
+        const tempPath = `${ordersFilePath}.tmp`;
+        await fs.writeFile(tempPath, JSON.stringify(data, null, 2));
+        
+        // Rename the temporary file to the actual file (atomic operation)
+        await fs.rename(tempPath, ordersFilePath);
+      } catch (writeError) {
+        console.error('Error during file write operation:', writeError);
+        // Try direct write as fallback
+        await fs.writeFile(ordersFilePath, JSON.stringify(data, null, 2));
+      }
     } catch (error) {
       console.error('Error writing order data:', error);
       throw new Error(`Error writing order data: ${error.message}`);

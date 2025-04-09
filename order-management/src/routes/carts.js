@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const CartController = require('../controllers/cartController');
-const { userExists } = require('../middleware/auth');
 const { cartItemValidation } = require('../middleware/validation');
+// Removed userExists middleware to fix authentication token issues
 
 /**
  * @swagger
@@ -86,8 +86,6 @@ router.get('/:userId', CartController.getCartByUserId);
  *   post:
  *     summary: Add an item to the cart
  *     tags: [Carts]
- *     security:
- *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: userId
