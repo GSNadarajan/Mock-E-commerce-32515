@@ -340,6 +340,52 @@ class AuthController {
     // This endpoint is just for consistency
     res.json({ message: 'Logged out successfully' });
   }
+
+  /**
+   * Verify JWT token
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   * @returns {Object} - Response with decoded token payload if valid
+   */
+  static async verifyToken(req, res) {
+    try {
+      const authHeader = req.headers['authorization'];
+      const token = authHeader && authHeader.split(' ')[1];
+      
+      if (!token) {
+        return res.status(401).json({ error: 'Authentication token required' });
+      }
+      
+      // Verify the token
+      const decoded = jwt.verify(token, authConfig.jwtSecret);
+      
+      if (!decoded) {
+        return res.status(403).json({ error: 'Invalid token' });
+      }
+      
+      // Find user by ID from JWT payload
+      const user = await UserModel.getUserById(decoded.id);
+      
+      if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+      
+      // Remove sensitive data from user object
+      const userWithoutPassword = { ...user };
+      delete userWithoutPassword.password;
+      delete userWithoutPassword.verificationToken;
+      delete userWithoutPassword.resetToken;
+      delete userWithoutPassword.resetTokenExpiry;
+      
+      res.json({
+        valid: true,
+        user: userWithoutPassword
+      });
+    } catch (error) {
+      console.error('Token verification error:', error.message);
+      res.status(403).json({ error: 'Invalid or expired token' });
+    }
+  }
 }
 
 module.exports = AuthController;
