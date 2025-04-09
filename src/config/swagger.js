@@ -6,7 +6,7 @@ const options = {
     info: {
       title: 'E-commerce API',
       version: '1.0.0',
-      description: 'API documentation for E-commerce service with User and Product Management',
+      description: 'API documentation for E-commerce service with User, Product, and Order Management',
     },
     servers: [
       {
@@ -14,8 +14,21 @@ const options = {
         description: 'Development server',
       },
     ],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+        },
+      },
+    },
   },
-  apis: ['./src/routes/*.js'], // Path to the API routes
+  apis: [
+    './src/routes/*.js',
+    './src/products/routes/*.js',
+    './src/orders/routes/*.js'
+  ], // Path to the API routes
 };
 
 module.exports = swaggerJsdoc(options);
