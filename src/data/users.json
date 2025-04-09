@@ -19,6 +19,20 @@
       "createdAt": "2025-04-09T21:12:22.255Z",
       "updatedAt": "2025-04-09T21:12:22.255Z",
       "lastLogin": null
+    },
+    {
+      "id": "22e9930f-3dc3-43f0-824c-8c9ca5300924",
+      "username": "testuser_1744233894852",
+      "email": "test_1744233894852@example.com",
+      "password": "$2b$10$EC.XwOWjogsq5cO7ZWZMoOEMrWbqlUsk7NpUgkibnXj2vjcYsXn2G",
+      "role": "user",
+      "isVerified": false,
+      "verificationToken": "09f2f5d5-501e-47e9-aa03-8b74bb248dea",
+      "resetToken": null,
+      "resetTokenExpiry": null,
+      "createdAt": "2025-04-09T21:24:55.008Z",
+      "updatedAt": "2025-04-09T21:24:55.008Z",
+      "lastLogin": null
     }
   ]
 }

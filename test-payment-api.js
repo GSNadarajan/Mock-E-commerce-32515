@@ -13,11 +13,12 @@ const TEST_RESULTS_FILE = path.join(__dirname, 'payment-test-results.json');
 
 // Test data
 const testUser = {
-  username: 'testuser',
-  email: 'test@example.com',
+  username: `testuser_${Date.now()}`,
+  email: `test_${Date.now()}@example.com`,
   password: 'Password123!',
   name: 'Test User',
-  role: 'admin' // Admin role to access all payment endpoints
+  role: 'admin', // Admin role to access all payment endpoints
+  isVerified: true // Ensure the user is verified
 };
 
 const testPayment = {
@@ -93,7 +94,7 @@ async function registerTestUser() {
     return response.data;
   } catch (error) {
     // If user already exists, that's fine
-    if (error.response && error.response.status === 409) {
+    if (error.response && (error.response.status === 409 || (error.response.data && error.response.data.error === 'Email already in use'))) {
       console.log('   User already exists, proceeding with login');
       return null;
     }
