@@ -5,6 +5,20 @@
       "id": "test",
       "username": "test",
       "email": "test@test.com"
+    },
+    {
+      "id": "75a29d47-f3c9-4661-a2e9-1e953ca588f5",
+      "username": "testuser",
+      "email": "test@example.com",
+      "password": "$2b$10$tJG6jk3jgks.E5KtonF.leerq8XVsUqdx/B.DBJxNK1p64urcytFS",
+      "role": "user",
+      "isVerified": false,
+      "verificationToken": "0bcfc3cf-97cf-4182-bca1-1c8e3906c753",
+      "resetToken": null,
+      "resetTokenExpiry": null,
+      "createdAt": "2025-04-09T21:12:22.255Z",
+      "updatedAt": "2025-04-09T21:12:22.255Z",
+      "lastLogin": null
     }
   ]
 }
