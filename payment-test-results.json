@@ -1,11 +1,40 @@
 {
   "summary": {
-    "total_tests": 0,
-    "passed": 0,
+    "total_tests": 4,
+    "passed": 4,
     "failed": 0,
     "skipped": 0,
-    "success_rate": "NaN%",
-    "execution_time": "2025-04-09T21:24:55.037Z"
+    "success_rate": "100%",
+    "execution_time": "2025-04-09T21:36:16.614Z"
   },
-  "tests": []
+  "tests": [
+    {
+      "name": "Create Payment",
+      "status": "passed",
+      "duration": "26ms",
+      "error_message": null,
+      "failure_logs": null
+    },
+    {
+      "name": "Get All Payments (Admin)",
+      "status": "passed",
+      "duration": "10ms",
+      "error_message": null,
+      "failure_logs": null
+    },
+    {
+      "name": "Get All Payments (Unauthorized)",
+      "status": "passed",
+      "duration": "16ms",
+      "error_message": null,
+      "failure_logs": null
+    },
+    {
+      "name": "Get Payment by ID",
+      "status": "passed",
+      "duration": "13ms",
+      "error_message": null,
+      "failure_logs": null
+    }
+  ]
 }

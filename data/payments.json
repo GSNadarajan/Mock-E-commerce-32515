@@ -1,4 +1,33 @@
 {
   "schemaVersion": "1.0",
-  "payments": []
+  "payments": [
+    {
+      "id": "531cb246-f82f-44f8-a947-29a8d65a4678",
+      "transactionId": "txn_763739221",
+      "userId": "12345",
+      "orderId": "5003",
+      "paymentMethod": "credit_card",
+      "amount": 1200.99,
+      "status": "completed",
+      "currency": "USD",
+      "description": "",
+      "metadata": {},
+      "createdAt": "2025-04-09T21:31:58.174Z",
+      "updatedAt": "2025-04-09T21:31:58.174Z"
+    },
+    {
+      "id": "2e104c0f-7ccf-4704-8fe2-f91854d985dd",
+      "transactionId": "txn_407480410",
+      "userId": "12345",
+      "orderId": "5003",
+      "paymentMethod": "credit_card",
+      "amount": 1200.99,
+      "status": "completed",
+      "currency": "USD",
+      "description": "",
+      "metadata": {},
+      "createdAt": "2025-04-09T21:36:16.559Z",
+      "updatedAt": "2025-04-09T21:36:16.559Z"
+    }
+  ]
 }

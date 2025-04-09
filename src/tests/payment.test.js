@@ -52,6 +52,7 @@ const testPayment = {
 let adminToken = null;
 let userToken = null;
 let createdPaymentId = null;
+let createdTransactionId = null;
 
 // Test results tracking
 const testResults = {
@@ -116,12 +117,11 @@ async function createTestUser(userData) {
     // Hash the password
     const hashedPassword = await bcrypt.hash(userData.password, 10);
     
-    // Create user without explicitly setting isVerified
-    // The auth middleware will bypass verification in test environment
+    // Create user and explicitly set isVerified to true for test environment
     const user = await UserModel.createUser({
       ...userData,
-      password: hashedPassword
-      // No need to set isVerified as the middleware will handle it
+      password: hashedPassword,
+      isVerified: true // Explicitly set isVerified to true for test users
     });
     
     console.log(`   Created test user: ${userData.username}`);
@@ -236,8 +236,29 @@ async function testCreatePayment() {
   console.log(`   Transaction ID: ${response.data.transaction_id}`);
   console.log(`   Message: ${response.data.message}`);
   
-  // Store the payment ID for later tests
-  createdPaymentId = response.data.transaction_id;
+  // Store the transaction ID
+  createdTransactionId = response.data.transaction_id;
+  
+  // Get all payments to find the payment ID by transaction ID
+  const allPaymentsResponse = await axios.get(
+    `${API_URL}/payments`,
+    {
+      headers: {
+        Authorization: `Bearer ${adminToken}`,
+        'X-Test-Admin': 'true'
+      }
+    }
+  );
+  
+  // Find the payment with the matching transaction ID
+  const payment = allPaymentsResponse.data.find(p => p.transactionId === createdTransactionId);
+  
+  if (payment) {
+    createdPaymentId = payment.id;
+    console.log(`   Found payment ID: ${createdPaymentId}`);
+  } else {
+    console.warn('   Could not find payment ID for the created transaction');
+  }
 }
 
 /**
