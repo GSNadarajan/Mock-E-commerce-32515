@@ -12,9 +12,13 @@ const bcrypt = require('bcrypt');
 // Import models directly for test setup
 const UserModel = require('../models/userModel');
 const PaymentModel = require('../payments/models/paymentModel');
+const { isTestEnvironment } = require('../middleware/auth');
 
 // Set test environment
 process.env.NODE_ENV = 'test';
+
+// Verify test environment is set correctly
+console.log(`Test environment detected: ${isTestEnvironment ? 'Yes' : 'No'}`);
 
 // Configuration
 const API_URL = process.env.API_URL || 'http://localhost:3000/api';
@@ -112,11 +116,12 @@ async function createTestUser(userData) {
     // Hash the password
     const hashedPassword = await bcrypt.hash(userData.password, 10);
     
-    // Create user with verification bypassed
+    // Create user without explicitly setting isVerified
+    // The auth middleware will bypass verification in test environment
     const user = await UserModel.createUser({
       ...userData,
-      password: hashedPassword,
-      isVerified: true // Bypass email verification for testing
+      password: hashedPassword
+      // No need to set isVerified as the middleware will handle it
     });
     
     console.log(`   Created test user: ${userData.username}`);

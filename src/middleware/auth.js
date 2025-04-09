@@ -14,6 +14,15 @@ const authConfig = require('../config/auth');
 // Check if we're in test environment
 const isTestEnvironment = process.env.NODE_ENV === 'test';
 
+/**
+ * Helper function to check if a user is verified or if we're in test environment
+ * @param {Object} user - User object
+ * @returns {boolean} True if user is verified or in test environment
+ */
+const isUserVerifiedOrTestEnv = (user) => {
+  return user.isVerified || isTestEnvironment;
+};
+
 // Configure passport to use local strategy for login
 passport.use(
   new LocalStrategy(
@@ -30,7 +39,7 @@ passport.use(
         }
         
         // Check if user is verified (skip in test environment)
-        if (!user.isVerified && !isTestEnvironment) {
+        if (!isUserVerifiedOrTestEnv(user)) {
           return done(null, false, { message: 'Email not verified' });
         }
         
@@ -69,6 +78,11 @@ passport.use(
           return done(null, false, { message: 'User not found' });
         }
         
+        // Check if user is verified (skip in test environment)
+        if (!isUserVerifiedOrTestEnv(user)) {
+          return done(null, false, { message: 'Email not verified' });
+        }
+        
         // Remove password from user object
         const userWithoutPassword = { ...user };
         delete userWithoutPassword.password;
@@ -95,5 +109,7 @@ const isAdmin = (req, res, next) => {
 module.exports = {
   passport,
   isAuthenticated,
-  isAdmin
+  isAdmin,
+  isTestEnvironment,
+  isUserVerifiedOrTestEnv // Export for testing purposes
 };
