@@ -135,6 +135,47 @@ const productUpdateValidation = [
   validate
 ];
 
+// Validation rules for order ID parameter
+const orderIdValidation = [
+  param('id')
+    .notEmpty().withMessage('Order ID is required'),
+  validate
+];
+
+// Validation rules for order creation
+const orderCreateValidation = [
+  body('userId')
+    .notEmpty().withMessage('User ID is required'),
+  body('items')
+    .isArray().withMessage('Items must be an array')
+    .notEmpty().withMessage('Order must contain at least one item'),
+  body('items.*.productId')
+    .notEmpty().withMessage('Product ID is required for each item'),
+  body('items.*.quantity')
+    .isInt({ min: 1 }).withMessage('Quantity must be at least 1 for each item'),
+  body('shippingAddress')
+    .notEmpty().withMessage('Shipping address is required'),
+  validate
+];
+
+// Validation rules for order update
+const orderUpdateValidation = [
+  body('status')
+    .optional()
+    .isIn(['pending', 'processing', 'shipped', 'delivered', 'cancelled'])
+    .withMessage('Invalid order status'),
+  validate
+];
+
+// Validation rules for order status update
+const orderStatusUpdateValidation = [
+  body('status')
+    .notEmpty().withMessage('Status is required')
+    .isIn(['pending', 'processing', 'shipped', 'delivered', 'cancelled'])
+    .withMessage('Invalid order status'),
+  validate
+];
+
 module.exports = {
   registerValidation,
   loginValidation,
@@ -144,5 +185,9 @@ module.exports = {
   userIdValidation,
   productIdValidation,
   productCreateValidation,
-  productUpdateValidation
+  productUpdateValidation,
+  orderIdValidation,
+  orderCreateValidation,
+  orderUpdateValidation,
+  orderStatusUpdateValidation
 };
